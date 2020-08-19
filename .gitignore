@@ -1,0 +1,7 @@
+.idea
+*/.exercism
+*/.stack-work
+*/*.cabal*
+*/*.yaml*
+*/README.md
+*/test
