@@ -7,4 +7,4 @@ isPangram text = isPangramRec ['a'..'z']  (map toLower text)
 
 isPangramRec :: [Char] -> String -> Bool
 isPangramRec [] _ = True
-isPangramRec (x:xs) text = elem x text && isPangramRec xs text
+isPangramRec (charToTest:remainingCharsToTest) text = elem charToTest text && isPangramRec remainingCharsToTest text
