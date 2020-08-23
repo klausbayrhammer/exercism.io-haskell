@@ -1,6 +1,7 @@
 module Bob (responseFor) where
 
 import Data.Char (toUpper, toLower, isSpace)
+import Data.List (dropWhileEnd)
 
 responseFor :: String -> String
 responseFor xs
@@ -31,5 +32,4 @@ isForcefulQuestion :: String -> Bool
 isForcefulQuestion x = isQuestion x && isShouting x
 
 trim :: String -> String
-trim = f . f
-   where f = reverse . dropWhile isSpace
+trim xs = dropWhileEnd isSpace xs
