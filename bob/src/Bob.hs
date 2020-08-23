@@ -11,10 +11,10 @@ responseFor xs
  | isShouting = "Whoa, chill out!"
  | otherwise = "Whatever."
     where
-        trimmedText = dropWhileEnd isSpace xs
         isSilence = trimmedText == []
         isForcefulQuestion = isQuestion && isShouting
         isQuestion = last trimmedText == '?'
         isShouting = isUpperCaseEqual && isLowerCaseNotEqual
+        trimmedText = dropWhileEnd isSpace xs
         isUpperCaseEqual = map toUpper trimmedText == trimmedText
         isLowerCaseNotEqual = map toLower trimmedText /= trimmedText
