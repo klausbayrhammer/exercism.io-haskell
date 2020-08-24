@@ -2,8 +2,10 @@ module CollatzConjecture (collatz) where
 
 collatz :: Integer -> Maybe Integer
 collatz initialNumber
-    | initialNumber <= 0 = Nothing
+    | isZeroOrNegative = Nothing
     | otherwise = Just (collatzRec initialNumber 0)
+    where
+        isZeroOrNegative = initialNumber <= 0
 
 collatzRec :: Integer -> Integer -> Integer
 collatzRec initialNumber numberOfSteps
