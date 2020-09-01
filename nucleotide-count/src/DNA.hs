@@ -1,19 +1,21 @@
 module DNA (nucleotideCounts, Nucleotide(..)) where
 
 import Data.Map (Map, fromList)
+import Data.Either.Combinators  (mapRight)
 
 data Nucleotide = A | C | G | T deriving (Eq, Ord, Show)
 
-nucleotideCounts :: String -> Either String (Map Nucleotide Int)
-nucleotideCounts xs
-    | containsInvalidChars = Left "Contains invalid chars"
-    | otherwise = Right (fromList nucleotideCountsTuples)
+mapNucleotide :: Char -> Either [Char] Nucleotide
+mapNucleotide 'A' = Right A
+mapNucleotide 'C' = Right C
+mapNucleotide 'G' = Right G
+mapNucleotide 'T' = Right T
+mapNucleotide x = Left [x]
+
+countNucleotides :: [Nucleotide] -> Map Nucleotide Int
+countNucleotides xs = fromList (map countOccurences [A, C, G, T])
     where
-        containsInvalidChars = any (\x -> not (elem x ['G', 'C', 'T', 'A'])) xs
-        occurences nucleotide = length (filter (== nucleotide) xs)
-        nucleotideCountsTuples =[
-                (G, occurences 'G'),
-                (C, occurences 'C'),
-                (A, occurences 'A'),
-                (T, occurences 'T')
-            ]
+        countOccurences nucleotide = (nucleotide, length (filter (== nucleotide) xs))
+
+nucleotideCounts :: String -> Either String (Map Nucleotide Int)
+nucleotideCounts xs = mapRight countNucleotides (mapM mapNucleotide xs)
