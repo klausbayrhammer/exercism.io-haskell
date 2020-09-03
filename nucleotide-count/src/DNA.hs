@@ -1,16 +1,15 @@
 module DNA (nucleotideCounts, Nucleotide(..)) where
 
 import Data.Map (Map, empty, insertWith)
-import Data.Either.Combinators  (mapRight)
 import Control.Monad (foldM)
 
 data Nucleotide = A | C | G | T deriving (Eq, Ord, Show)
 
 nucleotideCounts :: String -> Either String (Map Nucleotide Int)
-nucleotideCounts xs = foldM aggregateNucelotides empty xs
+nucleotideCounts xs = foldM aggregateNucleotides empty xs
 
-aggregateNucelotides :: Map Nucleotide Int -> Char -> Either String (Map Nucleotide Int)
-aggregateNucelotides acc dna = mapRight increaseNucleotideCount mappedDna
+aggregateNucleotides :: Map Nucleotide Int -> Char -> Either String (Map Nucleotide Int)
+aggregateNucleotides acc dna = increaseNucleotideCount <$> mappedDna
     where
         increaseNucleotideCount nucleotide = insertWith (+) nucleotide 1 acc
         mappedDna = mapNucleotide dna
