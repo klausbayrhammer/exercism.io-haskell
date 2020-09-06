@@ -1,11 +1,9 @@
 module SumOfMultiples (sumOfMultiples) where
 
-import Data.Set (fromList)
+import Data.Set (fromList, union, empty)
 
 sumOfMultiples :: [Integer] -> Integer -> Integer
 sumOfMultiples factors limit = sum multiples
     where
-        multiples = fromList factorsUntilLimit
-        factorsUntilLimit = concat $ map multiplesOfFactorUntilLimit factorsWithoutZero
-        multiplesOfFactorUntilLimit factor = takeWhile (< limit) [factor, 2 * factor ..]
-        factorsWithoutZero = filter (>0) factors
+        multiples = foldl addFactors empty $ filter (>0) factors
+        addFactors acc factor = union acc $ fromList [factor, 2 * factor .. limit-1]
