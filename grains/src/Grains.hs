@@ -2,13 +2,10 @@ module Grains (square, total) where
 
 square :: Integer -> Maybe Integer
 square n
-    | n > 0 && n < 65 = Just (squareRec n)
+    | isValidChessBoardPosition = Just (iterate (*2) 1 !! (fromIntegral n - 1))
     | otherwise = Nothing
-
-squareRec :: Integer -> Integer
-squareRec n
-    | n == 1 = 1
-    | otherwise = 2 * squareRec (n-1)
+    where
+        isValidChessBoardPosition = n > 0 && n < 65
 
 total :: Integer
-total = sum $ map squareRec [1..64]
+total = 18446744073709551615
